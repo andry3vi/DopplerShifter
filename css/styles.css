@@ -86,9 +86,9 @@ html { box-sizing: border-box; }
 /* Make the isotopes card full-bleed across the viewport while keeping inner padding for content */
 .isotopes-card.full-bleed,
 .isotopes-card.fullwidth {
-  /* center the card and set its width to match other cards */
-  width: min(90vw, 1200px);
-  max-width: 1200px;
+  /* center the card and set its width to match other cards; allow larger max-width for wide tables */
+  width: min(95vw, 1400px);
+  max-width: 1400px;
   margin: 0.75rem auto;
   border-radius: 8px;
   padding-left: 1rem;
@@ -109,6 +109,10 @@ html { box-sizing: border-box; }
 }
 .isotopes-card .plot-wrapper { border-top: 1px solid rgba(15,23,42,0.06); margin-top: 1rem; padding-top: 1rem; }
 .isotopes-card .plot-container { padding: 0; height: 360px; }
+
+/* Make sure inputs inside the isotope table can't shrink too small and td overflow doesn't hide them */
+.isotopes-card .input-full { min-width: 5rem; }
+.isotopes-card .tg td { overflow: visible; }
 
 
 /* Full-bleed variant to let the plot use the entire page width. We add a thin divider and small top padding
@@ -133,7 +137,7 @@ html { box-sizing: border-box; }
 .max-w-4xl { max-width: 64rem; }
 .max-w-4xl, .max-w-4xl table { box-sizing: border-box; }
 .table-fixed { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; background: transparent; }
-.table-fixed table { width: 100%; }
+.table-fixed table { width: max-content; min-width: 100%; }
 .col-1-4 { width: 25%; }
 .w-3-4 { width: 75%; }
 .w-full { width: 100%; }
@@ -181,7 +185,7 @@ html { box-sizing: border-box; }
 }
 
 /* Plot container */
-#hfs_plotly { width: 100%; max-width: 64rem; margin: 1.5rem auto; }
+#hfs_plotly { width: 100%; max-width: 80rem; margin: 1.5rem auto; }
 
 /* end replacement styles */
 
