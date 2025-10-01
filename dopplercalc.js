@@ -371,7 +371,7 @@ async function LoadConfiguration(){
             }
         }
         Object.keys(data).forEach(function(key) {
-            console.log('Key : ' + key + ', Value : ' + data[key]);
+            // console.log('Key : ' + key + ', Value : ' + data[key]);
             try {
                 document.getElementById(key).value = data[key];
                 

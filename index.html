@@ -4,7 +4,7 @@
       <!-- <link rel="stylesheet" href="css/styles.css?v=2"> -->
       <link rel="shortcut icon" href="#">
       <!-- <script type="text/javascript" src="nuclides.json"></script> -->
-      <link href="./css/output.css" rel="stylesheet">
+  <link href="./css/styles.css" rel="stylesheet">
       <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.min.js"></script>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
       <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
@@ -16,74 +16,78 @@
 
 
 
-  <div id="container" class="w-full flex flex-col items-center">
-  <table class="table-fixed w-full max-w-4xl mx-auto">
+  <div id="container" class="container">
+    <div class="page-grid">
+      <div class="card main-card full">
+        <div class="main-card-grid">
+          <div class="main-left">
+        <table class="table-fixed full-width max-w-4xl">
     <colgroup>
-      <col class="w-1/4" />
-      <col class="w-1/4" />
-      <col class="w-1/4" />
-      <col class="w-1/4" />
+      <col class="col-1-4" />
+      <col class="col-1-4" />
+      <col class="col-1-4" />
+      <col class="col-1-4" />
     </colgroup>
     <thead>
       <tr>
-        <th class="bg-slate-900 font-bold text-white" colspan="4">Transition Information</th>
+  <th class="header-dark" colspan="4">Transition Information</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="bg-slate-700 font-bold text-white">E lower</td>
-        <td><input type="number" placeholder="0" min="0" id="_Elow" class="w-full" /></td>
-        <td class="bg-slate-700 font-bold text-white">J lower</td>
-        <td><input type="number" placeholder="J" min="0" step="0.5" id="_Jlow" class="w-full" /></td>
+  <td class="cell-dark">E lower</td>
+  <td><input type="number" placeholder="0" min="0" id="_Elow" class="input-full" /></td>
+  <td class="cell-dark">J lower</td>
+  <td><input type="number" placeholder="J" min="0" step="0.5" id="_Jlow" class="input-full" /></td>
       </tr>
       <tr>
-        <td class="bg-slate-700 font-bold text-white">E upper [cm-1]</td>
-        <td><input type="number" placeholder="0" min="0" id="_Eup" class="w-full" /></td>
-        <td class="bg-slate-700 font-bold text-white">J upper</td>
-        <td><input type="number" placeholder="[J]" min="0" step="0.5" id="_Jup" class="w-full" /></td>
+  <td class="cell-dark">E upper [cm-1]</td>
+  <td><input type="number" placeholder="0" min="0" id="_Eup" class="input-full" /></td>
+  <td class="cell-dark">J upper</td>
+  <td><input type="number" placeholder="[J]" min="0" step="0.5" id="_Jup" class="input-full" /></td>
       </tr>
       <tr>
-        <td class="bg-slate-700 font-bold text-white">Wavelength [nm]</td>
-        <td><input type="number" placeholder="0" min="0" id="_Wl" class="w-full" /></td>
-        <td class="bg-slate-700 font-bold text-white">Frequency [Hz]</td>
-        <td><input type="number" placeholder="0" min="0" id="_Fq" class="w-full" /></td>
+  <td class="cell-dark">Wavelength [nm]</td>
+  <td><input type="number" placeholder="0" min="0" id="_Wl" class="input-full" /></td>
+  <td class="cell-dark">Frequency [Hz]</td>
+  <td><input type="number" placeholder="0" min="0" id="_Fq" class="input-full" /></td>
       </tr>
       <tr>
-        <td class="bg-slate-700 font-bold text-white">Wavenumber [cm-1]</td>
-        <td><input type="number" placeholder="0" min="0" id="_Wn" class="w-full" /></td>
+        <td class="cell-dark">Wavenumber [cm-1]</td>
+        <td><input type="number" placeholder="0" min="0" id="_Wn" class="input-full" /></td>
         <td></td>
         <td></td>
       </tr>
     </tbody>
     <thead>
       <tr>
-        <th class="bg-slate-900 font-bold text-white" colspan="4">Doppler Shifts</th>
+  <th class="header-dark" colspan="4">Doppler Shifts</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="bg-slate-700 font-bold text-white">Shifted Wavelength [nm]</td>
-        <td><input type="number" placeholder="0" id="_SPWl" readonly class="w-full" /></td>
-        <td class="bg-slate-700 font-bold text-white">Shifted Frequency [Hz]</td>
-        <td><input type="number" placeholder="0" id="_SPFq" readonly class="w-full" /></td>
+  <td class="cell-dark">Shifted Wavelength [nm]</td>
+  <td><input type="number" placeholder="0" id="_SPWl" readonly class="input-full" /></td>
+  <td class="cell-dark">Shifted Frequency [Hz]</td>
+  <td><input type="number" placeholder="0" id="_SPFq" readonly class="input-full" /></td>
       </tr>
       <tr>
-        <td class="bg-slate-700 font-bold text-white">Shifted Wavenumber [cm-1]</td>
-        <td><input type="number" placeholder="0" id="_SPWn" readonly class="w-full" /></td>
+        <td class="cell-dark">Shifted Wavenumber [cm-1]</td>
+        <td><input type="number" placeholder="0" id="_SPWn" readonly class="input-full" /></td>
         <td></td>
         <td></td>
       </tr>
       <tr>
-        <td class="bg-slate-700 font-bold text-white">Geometry</td>
+        <td class="cell-dark">Geometry</td>
         <td>
-          <select id="_Geom" name="Geometry" class="w-full">
+          <select id="_Geom" name="Geometry" class="select-full">
             <option value="1">Collinear</option>
             <option value="0">Anti-collinear</option>
           </select>
         </td>
-        <td class="bg-slate-700 font-bold text-white">Harmonic</td>
+        <td class="cell-dark">Harmonic</td>
         <td>
-          <select id="_Har" name="Harmonic" class="w-full">
+          <select id="_Har" name="Harmonic" class="select-full">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -92,66 +96,63 @@
         </td>
       </tr>
       <tr>
-        <td class="bg-slate-700 font-bold text-white">Acceleration [V]</td>
-        <td><input type="number" placeholder="0" min="0" id="_Acc" class="w-full" /></td>
-        <td class="bg-slate-700 font-bold text-white">Laser Set Point [cm-1]</td>
-        <td><input type="number" placeholder="0" min="0" id="_LSPWn" class="w-full" /></td>
+        <td class="cell-dark">Acceleration [V]</td>
+        <td><input type="number" placeholder="0" min="0" id="_Acc" class="input-full" /></td>
+        <td class="cell-dark">Laser Set Point [cm-1]</td>
+        <td><input type="number" placeholder="0" min="0" id="_LSPWn" class="input-full" /></td>
       </tr>
     </tbody>
   </table>
-  <datalist id="Elements"></datalist>
-</div>
+        <datalist id="Elements"></datalist>
+          </div> <!-- .main-left -->
+          <div class="main-right">
+        <!-- Reference information moved into the main card so it appears with Transition Information -->
+        <div class="reference-section">
+          <table class="table-fixed w-3-4">
+            <thead>
+              <tr>
+                <th class="header-dark" colspan="3">Reference information</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="cell-dark">A</td>
+                <td class="cell-dark">Z</td>
+                <td class="cell-dark">El</td>
+              </tr>
+              <tr>
+                <td><input type="number" placeholder="[A]" min="0" max="294" step="1" id="_Aref" /></td>
+                <td><input type="number" placeholder="[Z]" min="0" max="118" step="1" id="_Zref" /></td>
+                <td><input type="text" placeholder="[El]" list="Elements" id="_Elref"/></td>
+              </tr>
+              <tr>
+                <td class="cell-dark">spin</td>
+                <td colspan="2"><input placeholder="[I]" id="_Iref"/></td>
+              </tr>
+              <tr>
+                <td class="cell-dark">Mass [u]</td>
+                <td colspan="2"><input type="number" placeholder="[u]" min="0" id="_Massuref"/></td>
+              </tr>
+              <tr>
+                <td><button class="btn btn-primary" onclick="SaveConfiguration()">Save</button></td>
+                <td><button class="btn btn-primary" onclick="LoadConfiguration()">Load</button></td>
+                <td><input class="btn btn-primary" type="file" id="ConfFile"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          </div> <!-- .main-right -->
+        </div> <!-- .main-card-grid -->
+      </div> <!-- .main-card -->
 
-    <table class="table-fixed w-3/4">
-      <thead>
-         <tr>
-            <th class="bg-slate-900 font-bold text-white" colspan="3">Reference information</th>
-         </tr>
-         </thead>
-  
-      <tbody>
-  
-            <tr>
-              <td class="bg-slate-700 font-bold text-white">A</td>
-              <td class="bg-slate-700 font-bold text-white">Z</td>
-              <td class="bg-slate-700 font-bold text-white">El</td>
-            </tr>
-            <tr>
-              <td ><input type="number"  placeholder="[A]" min="0" max="294" step="1" id="_Aref" /></td>
-              <td ><input type="number"  placeholder="[Z]" min="0" max="118" step="1" id="_Zref" /></td>
-              <td ><input type="text"    placeholder="[El]" list="Elements" id="_Elref"/></td>
-            </tr>
-            <tr>
-              <td class="bg-slate-700 font-bold text-white">spin</td>
-              <td  colspan="2"><input placeholder="[I]" id="_Iref"/></td>
-            </tr>
-            <tr>
-              <td class="bg-slate-700 font-bold text-white">Mass [u]</td>
-              <td  colspan="2"><input type="number"  placeholder="[u]" min="0" id="_Massuref"/></td>
-            </tr>
-           
-           <tr>
-              <td><button class="font-extrabold border-2 p-2 border-red-700 bg-transparent hover:border-yellow-500 rounded-md" onclick="SaveConfiguration()">Save</button></td>
-              <td><button class="font-extrabold border-2 p-2 border-red-700 bg-transparent hover:border-yellow-500 rounded-md"  onclick="LoadConfiguration()">Load</button></td>
-              <td><input class="font-extrabold border-2 p-2 border-red-700 bg-transparent hover:border-yellow-500 rounded-md"  type="file" id="ConfFile"></td>
-            </tr>
-            <!-- <tr>
-              <td colspan="3"><button class="font-extrabold border-2 p-2 border-red-700 bg-transparent hover:border-yellow-500 rounded-md" onclick="drawHFS()">Draw</button></td>
-            </tr> -->
-      </tbody>
-  
-      </table>
-  
-   
-  </div>
-
-<div id="iso" class="w-full">
-  <table class="table-fixed w-full" id="isotab">
+<div id="iso" class="full-width">
+  <div class="card isotopes-card full-bleed">
+    <table class="table-fixed full-width" id="isotab">
     <thead>
        <tr>
-        <th class="bg-slate-900 font-bold text-white" colspan="5">Isotopes</th>
-        <th class="bg-slate-900 font-bold text-white" colspan="1"><button class="font-extrabold border-2 p-2 border-red-700 bg-transparent hover:border-blue-600 rounded-md" onclick="addRow(); setCookies();">Add Row</button></th>
-        <th class="bg-slate-900 font-bold text-white" colspan="1"><button class="font-extrabold border-2 p-2 border-red-700 bg-transparent hover:border-blue-600 rounded-md" onclick="rmRow(); setCookies();">Remove Row</button></th>
+        <th class="header-dark" colspan="5">Isotopes</th>
+        <th class="header-dark" colspan="1"><button class="btn btn-primary" onclick="addRow(); setCookies();">Add Row</button></th>
+        <th class="header-dark" colspan="1"><button class="btn btn-primary" onclick="rmRow(); setCookies();">Remove Row</button></th>
       </tr>
       <tr>
         <th class="bg-slate-900 font-bold text-white">Draw</th>
@@ -169,30 +170,32 @@
       </tr>
     </thead>
     <tbody>
-      <tr id="isorow_0" class="odd:bg-white even:bg-slate-50">
+      <tr id="isorow_0">
         <td class="tg-amwm text-center"><input type="checkbox" class="iso-select" id="_select_0" /></td>
-        <td class="tg-amwm text-center"><input type="number" placeholder="[A]" min="0" max="294" step="1" id="_A_0" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input type="number" placeholder="[Z]" min="0" max="118" step="1" id="_Z_0" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input type="text" placeholder="[El]" list="Elements" id="_El_0" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input type="number" placeholder="[u]" min="0" step="0.0001" id="_Massu_0" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input placeholder="[I]" id="_I_0" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input type="number" placeholder="0" id="_Fqshift_0" step="0.001" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input type="number" placeholder="0" id="_Vshift_0" readonly step="0.001" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input type="number" placeholder="B lower" id="_Blow_0" step="0.001" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input type="number" placeholder="A lower" id="_Alow_0" step="0.001" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input type="number" placeholder="B upper" id="_Bup_0" step="0.001" class="w-full text-center" /></td>
-        <td class="tg-amwm text-center"><input type="number" placeholder="A upper" id="_Aup_0" step="0.001" class="w-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="number" placeholder="[A]" min="0" max="294" step="1" id="_A_0" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="number" placeholder="[Z]" min="0" max="118" step="1" id="_Z_0" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="text" placeholder="[El]" list="Elements" id="_El_0" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="number" placeholder="[u]" min="0" step="0.0001" id="_Massu_0" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input placeholder="[I]" id="_I_0" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="number" placeholder="0" id="_Fqshift_0" step="0.001" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="number" placeholder="0" id="_Vshift_0" readonly step="0.001" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="number" placeholder="B lower" id="_Blow_0" step="0.001" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="number" placeholder="A lower" id="_Alow_0" step="0.001" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="number" placeholder="B upper" id="_Bup_0" step="0.001" class="input-full text-center" /></td>
+        <td class="tg-amwm text-center"><input type="number" placeholder="A upper" id="_Aup_0" step="0.001" class="input-full text-center" /></td>
       </tr>          
     </tbody>
 
-  </table>
+    </table>
+
+    <!-- HFS plot moved inside isotope card -->
+    <div class="plot-wrapper">
+      <div id="hfs_plotly" class="plot-container"></div>
+    </div>
+  </div> <!-- .isotopes-card -->
 </div>
 
-<!-- Add this Plotly div for the hyperfine structure plot -->
-<div id="hfs_plotly" class="w-full max-w-4xl mx-auto my-6"></div>
-
-<div id="HFS_plot" class="w-full">
-</div>
+<div id="HFS_plot" class="full-width"></div>
 <script src="dopplercalc.js?v=3"></script>
 
 </body>

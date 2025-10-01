@@ -1,10 +1,189 @@
+:root{
+  --bg: #0f172a;
+  --muted: #334155;
+  --accent: #f97316; /* orange */
+  --accent-dark: #f38630;
+  --danger: #b91c1c;
+  --surface: #ffffff;
+  --muted-2: #f8fafc;
+  --text: #0f172a;
+}
+
 body,
 html {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color: var(--text);
+  background: linear-gradient(180deg,#f8fafc 0%, #ffffff 100%);
 }
+
+/* Make sizing predictable and avoid overflow from padding/borders */
+html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+
+/* --- Simple replacement styles for Tailwind utilities used in index.html --- */
+
+/* Layout helpers */
+.container { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; }
+.full-width { width: 100%; }
+
+/* Page grid that holds main form and sidebar */
+.page-grid {
+  width: 100%;
+  max-width: none;
+  display: grid;
+  grid-template-columns: 1fr; /* single column so reference appears with main */
+  gap: 1rem;
+  align-items: start;
+  margin: 0 auto 1.5rem auto;
+  justify-items: center; /* center grid items (cards) */
+}
+
+/* Card container used for consistent spacing and background */
+.card {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 8px 20px rgba(15,23,42,0.06);
+  border: 1px solid rgba(15,23,42,0.04);
+}
+.card { width: min(90vw, 1200px); max-width: 1200px; margin: 0.75rem 0; }
+.main-card { padding: 0.5rem; }
+.sidebar-card { padding: 0.75rem; }
+
+/* Ensure main card matches isotope card width for a consistent layout */
+.main-card {
+  width: min(90vw, 1200px);
+  max-width: 1200px;
+  margin: 0.75rem auto;
+  box-sizing: border-box;
+}
+
+.reference-section { margin-top: 1rem; }
+.reference-section table { width: 100%; }
+
+/* Two-column layout inside the main card */
+.main-card-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; align-items: start; }
+.main-card-grid .main-left { }
+.main-card-grid .main-right { }
+
+@media (max-width: 900px) {
+  .main-card-grid { grid-template-columns: 1fr; }
+}
+
+#iso .table-fixed, .isotopes-card .table-fixed { background: transparent; box-shadow: none; }
+.iso, #iso { display: block; width: 100%; margin: 0.5rem 0 0.25rem 0; max-width: 100%; padding: 0; }
+.plot-card { max-width: 90rem; margin: 0.5rem auto; padding: 1rem; display: block; }
+.plot-container { width: 100%; height: 360px; display: block; }
+
+/* When plot is inside the isotope card */
+.isotopes-card { max-width: 100%; width: 100%; margin: 0; border-radius: 6px; }
+.isotopes-card .table-fixed { width: 100%; }
+
+/* Make the isotopes card full-bleed across the viewport while keeping inner padding for content */
+.isotopes-card.full-bleed,
+.isotopes-card.fullwidth {
+  /* center the card and set its width to match other cards */
+  width: min(90vw, 1200px);
+  max-width: 1200px;
+  margin: 0.75rem auto;
+  border-radius: 8px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+/* ensure table inside uses the full card width */
+.isotopes-card.full-bleed .table-fixed,
+.isotopes-card.fullwidth .table-fixed { width: 100%; margin: 0; }
+
+@media (max-width: 900px) {
+  .isotopes-card.full-bleed, .isotopes-card.fullwidth { width: 95vw !important; max-width: 95vw !important; padding-left: 0.75rem; padding-right: 0.75rem; }
+}
+
+@media (max-width: 900px) {
+  .main-card { width: 95vw !important; max-width: 95vw !important; }
+}
+.isotopes-card .plot-wrapper { border-top: 1px solid rgba(15,23,42,0.06); margin-top: 1rem; padding-top: 1rem; }
+.isotopes-card .plot-container { padding: 0; height: 360px; }
+
+
+/* Full-bleed variant to let the plot use the entire page width. We add a thin divider and small top padding
+   so the plot visually attaches to the isotope section directly above it. */
+.full-bleed { max-width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; border-radius: 0 !important; box-shadow: none !important; padding: 0; }
+.plot-card.full-bleed { margin-top: 0.25rem; border-top: 1px solid rgba(15,23,42,0.06); padding-top: 0.75rem; clear: both; }
+.plot-card.full-bleed, .plot-card { box-sizing: border-box; }
+.full-bleed .plot-container { padding: 0.75rem 2rem; box-sizing: border-box; max-width: none; margin: 0; }
+
+@media (min-width: 1200px) {
+  .plot-container { height: 420px; }
+}
+
+/* Responsive: collapse to single column on small screens */
+@media (max-width: 900px) {
+  .page-grid { grid-template-columns: 1fr; }
+  .sidebar-card { order: 2; }
+  .main-card { order: 1; }
+  .plot-container { height: 260px; }
+}
+.center-block { margin-left: auto; margin-right: auto; }
+.max-w-4xl { max-width: 64rem; }
+.max-w-4xl, .max-w-4xl table { box-sizing: border-box; }
+.table-fixed { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; background: transparent; }
+.table-fixed table { width: 100%; }
+.col-1-4 { width: 25%; }
+.w-3-4 { width: 75%; }
+.w-full { width: 100%; }
+
+/* make tables look like cards */
+.table-fixed > table, table.table-fixed { background: var(--surface); border-radius: 8px; box-shadow: 0 6px 18px rgba(15,23,42,0.06); overflow: hidden; }
+
+/* Header / cell colors */
+.header-dark { background-color: var(--bg); color: #fff; font-weight: 700; padding: 12px 16px; text-align: left; }
+.cell-dark { background-color: var(--muted); color: #fff; font-weight: 700; padding: 10px 12px; }
+
+/* Inputs/selects/buttons */
+.input-full { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; font-size: 0.95rem; }
+.input-full:focus, .select-full:focus { outline: none; box-shadow: 0 0 0 3px rgba(249,115,22,0.12); border-color: var(--accent); }
+.select-full { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; }
+.btn { font-weight: 800; border-width: 2px; padding: 8px 12px; background: transparent; border-radius: 8px; cursor: pointer; transition: all .15s ease; display: inline-block; }
+.btn-primary { border-color: var(--danger); color: var(--danger); }
+.btn-primary:hover { border-color: #f97316; color: #f97316; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+/* small utilities */
+.text-center { text-align: center; }
+.odd\:bg-white:nth-child(odd) { background-color: #fff; }
+.even\:bg-slate-50:nth-child(even) { background-color: var(--muted-2); }
+.tg-amwm { font-weight: bold; text-align: center; vertical-align: top; }
+.max-w-4xl { max-width: 64rem; }
+.my-6 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+
+/* Table/body tweaks to align with new visual style */
+.tg th { background: var(--accent-dark); color: #fff; font-weight: 700; padding: 12px; text-align: left; }
+.tg td { padding: 10px 12px; border-top: 1px solid #eef2f7; }
+.tg tr:nth-child(even) td { background: var(--muted-2); }
+
+/* make inputs inside tables compact */
+.tg input { padding: 6px 8px; border-radius: 4px; }
+
+/* responsive tweaks */
+@media (max-width: 640px) {
+  .container { padding: 1rem; }
+  .header-dark { font-size: 0.95rem; }
+  .cell-dark { font-size: 0.9rem; }
+  .tg th, .tg td { font-size: 0.95rem; padding: 8px; }
+}
+
+/* Plot container */
+#hfs_plotly { width: 100%; max-width: 64rem; margin: 1.5rem auto; }
+
+/* end replacement styles */
 
 /* #Dopplerinfo { 
   width: 100%;
