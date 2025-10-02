@@ -30,6 +30,52 @@ html { box-sizing: border-box; }
 .container { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; }
 .full-width { width: 100%; }
 
+/* Site-level container for the new structure */
+.site-container { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 2rem 1rem; }
+
+/* Top grid: transitions (left) and reference (right) */
+.top-grid { width: min(95vw, 1200px); display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; align-items: start; }
+.top-grid .card { padding: 0; }
+.card-title { margin: 0; padding: 12px 16px; font-size: 1rem; background: var(--bg); color: #fff; border-radius: 8px 8px 0 0; }
+.card-body { padding: 1rem; }
+
+/* Card header with actions (used for isotope card) */
+.card-header { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.card-header .card-title { margin: 0; padding: 12px 16px; border-radius: 8px 8px 0 0; }
+.card-actions { display: flex; gap: 0.5rem; padding-right: 0.5rem; }
+.card-actions .btn { padding: 6px 10px; }
+
+/* Specific cards sizing */
+.transitions, .reference { width: 100%; }
+
+/* Make reference a centered single-column card like isotope and plot */
+.reference { width: min(95vw, 1400px); max-width: 1400px; }
+.reference .card-body { padding: 1rem; }
+
+/* Inside the reference card: main reference table and a side settings table */
+.reference-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; align-items: start; }
+.reference-grid .ref-main, .reference-grid .ref-side { width: 100%; }
+.reference-grid .ref-side table { width: 100%; }
+
+@media (max-width: 900px) {
+  .reference-grid { grid-template-columns: 1fr; }
+}
+
+/* Isotope card spans the full site width cap and allows its table to scroll horizontally */
+.isotope-card { width: min(95vw, 1400px); max-width: 1400px; }
+.isotope-card .table-wrapper { overflow-x: auto; }
+.isotope-card table { width: max-content; min-width: 100%; border-collapse: collapse; }
+
+/* Plot card full width */
+.plot-card { width: min(95vw, 1400px); max-width: 1400px; }
+.plot-container { width: 100%; height: 360px; }
+
+@media (max-width: 900px) {
+  .top-grid { grid-template-columns: 1fr; }
+  .isotope-card, .plot-card { width: 95vw !important; max-width: 95vw !important; }
+  .plot-container { height: 260px; }
+}
+
 /* Page grid that holds main form and sidebar */
 .page-grid {
   width: 100%;
@@ -41,6 +87,17 @@ html { box-sizing: border-box; }
   margin: 0 auto 1.5rem auto;
   justify-items: center; /* center grid items (cards) */
 }
+
+/* Shared container to align all table-based cards to the same width */
+.tables-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tables-container > .card { width: min(95vw, 1400px); max-width: 1400px; }
 
 /* Card container used for consistent spacing and background */
 .card {
@@ -187,113 +244,19 @@ html { box-sizing: border-box; }
 /* Plot container */
 #hfs_plotly { width: 100%; max-width: 80rem; margin: 1.5rem auto; }
 
+/* Highlight Laser Set Point input to make it more visible */
+#_LSPWn {
+  background: #fff9ef; /* pale warm background */
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px rgba(249,115,22,0.08);
+  transition: box-shadow 160ms ease, border-color 160ms ease, transform 120ms ease;
+}
+#_LSPWn:focus {
+  box-shadow: 0 8px 28px rgba(249,115,22,0.16);
+  border-color: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
 /* end replacement styles */
-
-/* #Dopplerinfo { 
-  width: 100%;
-  margin: auto;
-} */
-
-/* #Tinfo { */
-  /* width: 50%; */
-  /* float: left; */
-  /* } */
-  /* #Rinfo { */
-    /* width: 50%; */
-    /* float: left; */
-    /* } */
-.tg {
-  table-layout:fixed;
-  width: 100%;
-  border-collapse: collapse;
-  border-color: #aaa;
-  border-spacing: 0;
-  border-style: solid;
-  border-width: 1px;
-}
-
-.tg td {
-  background-color: #fff;
-  border-color: #aaa;
-  border-style: solid;
-  border-width: 0px;
-  color: #333;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  overflow: hidden;
-  padding: 10px 5px;
-  word-break: normal;
-}
-
-.tg th {
-  background-color: #f38630;
-  border-color: #aaa;
-  border-style: solid;
-  border-width: 0px;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  font-weight: normal;
-  overflow: hidden;
-  padding: 10px 5px;
-  word-break: normal;
-}
-
-.tg .tg-i9i9 {
-  background-color: #fe996b;
-  border-color: inherit;
-  font-weight: bold;
-  text-align: center;
-  vertical-align: top
-}
-
-
-.tg .tg-xozw {
-  background-color: #ffcc67;
-  font-weight: bold;
-  text-align: center;
-  vertical-align: top
-}
-
-.tg .tg-amwm {
-  font-weight: bold;
-  text-align: center;
-  vertical-align: top
-}
-
-.tg {
-  border-collapse: collapse;
-  border-color: #aaa;
-  border-spacing: 0;
-  border-style: solid;
-  border-width: 1px;
-}
-
-.tg td {
-  background-color: #fff;
-  border-color: #aaa;
-  border-style: solid;
-  border-width: 0px;
-  color: #333;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  overflow: hidden;
-  padding: 10px 5px;
-  word-break: normal;
-}
-
-.tg th {
-  background-color: #f38630;
-  border-color: #aaa;
-  border-style: solid;
-  border-width: 0px;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  font-weight: normal;
-  overflow: hidden;
-  padding: 10px 5px;
-  word-break: normal;
-}
 
 

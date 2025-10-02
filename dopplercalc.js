@@ -38,28 +38,29 @@ function setCookies(){
         setCookie(node.id,node.value,10);
     });
 
-    var table = document.getElementById("isotab");
-    var ids = table.rows.length-3;
-    setCookie("isoNumbers",ids,10);
+    // store the number of data rows in the isotab tbody
+    const tbody = document.querySelector('#isotab tbody');
+    const rows = tbody ? tbody.rows.length : 0;
+    setCookie("isoNumbers", rows, 10);
 }
 function getCookies(){
-    var table = document.getElementById("isotab");
-    var ids = table.rows.length-3;
-    // console.log("row current -> "+ids);
-    // console.log("row from cookie -> "+getCookie("isoNumbers"));
-    if((getCookie("isoNumbers")-ids)>0){
-        for (let index = 0; index < getCookie("isoNumbers")-ids; index++) {
-            // console.log("adding row")
-            addRow();
+    const tbody = document.querySelector('#isotab tbody');
+    const rows = tbody ? tbody.rows.length : 0;
+    const rawIso = getCookie("isoNumbers");
+    // Only auto-adjust row count when an isoNumbers cookie is actually present
+    if (rawIso !== "") {
+        const cookieIso = parseInt(rawIso) || 0;
+        if (cookieIso > rows) {
+            for (let i = 0; i < cookieIso - rows; i++) addRow();
+        } else if (cookieIso < rows) {
+            for (let i = 0; i < rows - cookieIso; i++) rmRow();
         }
     }
-    if((getCookie("isoNumbers")-ids)<0){
-        for (let index = 0; index < ids-getCookie("isoNumbers"); index++) {
-            rmRow();
-        }
-    }
+
+    // populate saved values for inputs now that rows are present
     document.querySelectorAll('[id^=_]').forEach(function(node) {
-        node.value = getCookie(node.id);
+        const val = getCookie(node.id);
+        if (val !== "") node.value = val;
     });
 }
 function setCookie(cname, cvalue, exdays) {
@@ -191,29 +192,40 @@ function CalculateSP() {
 
 function addRow() {
     const table = document.getElementById("isotab");
-    const lastRow = table.rows[table.rows.length - 1];
+    const tbody = table.tBodies[0];
+    if (!tbody) return;
+    const lastRow = tbody.rows[tbody.rows.length - 1];
     const newRow = lastRow.cloneNode(true);
 
-    const oldId = table.rows.length - 3;
-    const id = oldId + 1;
-    newRow.id = `isorow_${id}`;
+    const newIndex = tbody.rows.length; // zero-based index for the new row
+    newRow.id = `isorow_${newIndex}`;
+    newRow.dataset.index = newIndex;
 
-    // Update input IDs in the new row
-    Array.from(newRow.getElementsByTagName('input')).forEach(input => {
-        const parts = input.id.split("_");
-        if (parts.length > 2) {
-            input.id = `_${parts[1]}_${id}`;
+    // Update input/select IDs and clear values in the cloned row
+    Array.from(newRow.querySelectorAll('input, select')).forEach(node => {
+        // Update ids of the form _NAME_INDEX
+        if (node.id) {
+            const m = node.id.match(/^_([A-Za-z0-9]+)_(\d+)$/);
+            if (m) node.id = `_${m[1]}_${newIndex}`;
+        }
+        // reset values/checked state
+        if (node.type === 'checkbox' || node.type === 'radio') {
+            node.checked = false;
+        } else {
+            node.value = '';
         }
     });
 
-    $('#isotab').append(newRow);
+    tbody.appendChild(newRow);
     updateIsoListener();
 }
 
 function rmRow() {
     const table = document.getElementById("isotab");
-    if (table.rows.length > 3) {
-        table.deleteRow(table.rows.length - 1);
+    const tbody = table.tBodies[0];
+    if (!tbody) return;
+    if (tbody.rows.length > 1) {
+        tbody.deleteRow(tbody.rows.length - 1);
     }
     updateIsoListener();
 }
@@ -249,14 +261,22 @@ function updateIsoListener(){
 function updateIsotab(){
     // document.getElementById('_LSPx2Wl').value = 2*10000000/document.getElementById('_LSPWn').value;
     var table = document.getElementById("isotab");
-    var ids = table.rows.length-3;
-    for (let index = 0; index < ids+1; index++) {
+    var tbody = table.tBodies[0];
+    var ids = tbody ? tbody.rows.length : 0;
+    for (let index = 0; index < ids; index++) {
         // const FQshifted = dopplerShift(document.getElementById('Fq').value/document.getElementById('Har').value,document.getElementById("Massu_"+index).value,document.getElementById("Acc").value,document.getElementById("Geom").value);
         
         // document.getElementById("Fqshift_"+index).value = 1e-6*(document.getElementById('LSPWn').value*c*100-FQshifted);
-        let lab_fq = document.getElementById('_LSPWn').value*c*100
-        let rest_fq = (document.getElementById('_Fq').value/document.getElementById('_Har').value) +(1e6*document.getElementById("_Fqshift_"+index).value/document.getElementById('_Har').value)
-        document.getElementById("_Vshift_"+index).value = document.getElementById('_Acc').value-voltageShift(lab_fq,rest_fq,document.getElementById("_Massu_"+index).value);
+        let lab_fq = (parseFloat(document.getElementById('_LSPWn').value) || 0) * c * 100;
+        const fq = parseFloat(document.getElementById('_Fq').value) || 0;
+        const har = parseFloat(document.getElementById('_Har').value) || 1;
+        const fshift = parseFloat(document.getElementById("_Fqshift_"+index)?.value) || 0;
+        let rest_fq = (fq / har) + (1e6 * fshift / har);
+        const mass = parseFloat(document.getElementById("_Massu_"+index)?.value) || 0;
+        const acc = parseFloat(document.getElementById('_Acc').value) || 0;
+        const vshift = acc - voltageShift(lab_fq, rest_fq, mass);
+        const vNode = document.getElementById("_Vshift_"+index);
+        if (vNode) vNode.value = vshift;
     }
     setCookies();
 
@@ -325,9 +345,10 @@ function SaveConfiguration(){
         conf[node.id] = node.value;
     });
 
-    var table = document.getElementById("isotab");
-    var ids = table.rows.length-3;
-    conf["isoNumbers"] = ids;
+    // store number of data rows (tbody) for isotab
+    const tbody = document.querySelector('#isotab tbody');
+    const rows = tbody ? tbody.rows.length : 0;
+    conf["isoNumbers"] = rows;
 
     // convert to json string
     var outJSON = JSON.stringify( conf );
@@ -358,28 +379,39 @@ async function LoadConfiguration(){
       console.error(error);
 
     }
-        var table = document.getElementById("isotab");
-        var ids = table.rows.length-3;
-        if((data["isoNumbers"]-ids)>0){
-            for (let index = 0; index < data["isoNumbers"]-ids; index++) {
-                addRow();
+    // Ensure the isotab has the correct number of rows (use tbody)
+    const table = document.getElementById("isotab");
+    const tbody = table.tBodies[0];
+    const current = tbody ? tbody.rows.length : 0;
+    const target = parseInt(data["isoNumbers"]) || 0;
+    if (target > current) {
+        for (let i = 0; i < target - current; i++) addRow();
+    } else if (target < current) {
+        for (let i = 0; i < current - target; i++) rmRow();
+    }
+
+    // Populate saved values defensively
+    Object.keys(data).forEach(function(key) {
+        try {
+            const el = document.getElementById(key);
+            if (!el) return; // skip missing elements
+            // handle checkboxes
+            if (el.type === 'checkbox') {
+                // stored value may be 'true'/'false', '1'/'0', or 'on'
+                const v = String(data[key]).toLowerCase();
+                el.checked = (v === 'true' || v === '1' || v === 'on');
+            } else {
+                el.value = data[key];
             }
+        } catch (error) {
+            console.log('LoadConfiguration assign error', error);
         }
-        if((data["isoNumbers"]-ids)<0){
-            for (let index = 0; index < ids-data["isoNumbers"]; index++) {
-                rmRow();
-            }
-        }
-        Object.keys(data).forEach(function(key) {
-            // console.log('Key : ' + key + ', Value : ' + data[key]);
-            try {
-                document.getElementById(key).value = data[key];
-                
-            } catch (error) {
-                console.log(error);
-            }
-          })
-        setCookies();
+    });
+
+    // re-run listeners and calculations after load
+    updateIsoListener();
+    updateIsotab();
+    setCookies();
       
     
 
